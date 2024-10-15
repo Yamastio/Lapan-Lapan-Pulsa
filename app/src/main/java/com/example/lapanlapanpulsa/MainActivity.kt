@@ -6,12 +6,15 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ExitToApp
@@ -42,6 +45,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -78,18 +84,33 @@ fun LapanLapanDrawer() {
     val currentBackStackEntry by navigationController.currentBackStackEntryAsState()
 
 
+
     ModalNavigationDrawer(
         drawerState = drawerState,
-        gesturesEnabled = true,
+        gesturesEnabled = drawerState.isOpen,
         drawerContent = {
             ModalDrawerSheet(modifier = Modifier.width(300.dp)) {
                 Box(
                     modifier = Modifier
                         .background(LapanColor)
                         .fillMaxWidth()
-                        .height(150.dp)
+                        .height(200.dp)
                 ) {
-                    Text(text = "Lapan Lapan Pulsa", modifier = Modifier.padding(16.dp), color = Color.White)
+                    Column(modifier = Modifier.padding(16.dp)) {
+                        Image(
+                            painter = painterResource(id = R.drawable.logo),
+                            contentDescription = "Logo",
+                            modifier = Modifier.size(100.dp)
+                        )
+                        Text(
+                            text = "Lapan Lapan",
+                            color = Color.White,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(top = 16.dp)
+                        )
+                        Text(text = "PT. Alomogada Mandiri Nusantara", color = Color.White)
+
+                    }
                 }
                 Divider()
                 //akhir header
@@ -134,9 +155,15 @@ fun LapanLapanDrawer() {
                     }
                 )
                 NavigationDrawerItem(
-                    label = { Text(text = "Keluar", color = Color.Black)},
+                    label = { Text(text = "Keluar", color = Color.Black) },
                     selected = false,
-                    icon = { Icon(imageVector = Icons.AutoMirrored.Filled.ExitToApp, contentDescription = "logout", tint = Color.Black)},
+                    icon = {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ExitToApp,
+                            contentDescription = "logout",
+                            tint = Color.Black
+                        )
+                    },
                     onClick = {
                         corountineScope.launch {
                             drawerState.close()
@@ -151,7 +178,7 @@ fun LapanLapanDrawer() {
                 val corountineScope = rememberCoroutineScope()
                 TopAppBar(
                     title = {
-                        Text(text = "Lapan Lapan Pulsa")
+                        Text(text = "Lapan Lapan Pulsa", fontWeight = FontWeight.Bold)
                     },
                     colors = TopAppBarDefaults.topAppBarColors(
                         containerColor = LapanColor,
@@ -165,7 +192,7 @@ fun LapanLapanDrawer() {
                     }
                 )
             }
-        ) {paddingValues ->
+        ) { paddingValues ->
             // Pastikan paddingValues diterapkan pada NavHost
             Box(
                 modifier = Modifier
@@ -173,7 +200,10 @@ fun LapanLapanDrawer() {
                     .padding(paddingValues) // Gunakan padding dari Scaffold
             ) {
                 // Konten utama Anda di sini
-                NavHost(navController = navigationController, startDestination = Screens.Home.screen) {
+                NavHost(
+                    navController = navigationController,
+                    startDestination = Screens.Home.screen
+                ) {
                     composable(Screens.Home.screen) { Home() }
                     composable(Screens.AboutMe.screen) { AboutMe() }
                 }
@@ -182,4 +212,3 @@ fun LapanLapanDrawer() {
 
     }
 }
-
