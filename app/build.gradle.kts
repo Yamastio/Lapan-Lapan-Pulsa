@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.lapanlapanpulsa"
+    namespace = "com.promedia.lapanlapanpulsa"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.lapanlapanpulsa"
+        applicationId = "com.promedia.lapanlapanpulsa"
         minSdk = 24
         targetSdk = 35
         versionCode = 4

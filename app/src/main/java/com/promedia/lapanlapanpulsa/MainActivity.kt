@@ -1,4 +1,4 @@
-package com.example.lapanlapanpulsa
+package com.promedia.lapanlapanpulsa
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -52,8 +52,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.lapanlapanpulsa.ui.theme.LapanColor
-import com.example.lapanlapanpulsa.ui.theme.LapanLapanPulsaTheme
+import com.promedia.lapanlapanpulsa.ui.theme.LapanColor
+import com.promedia.lapanlapanpulsa.ui.theme.LapanLapanPulsaTheme
 import kotlinx.coroutines.launch
 import kotlin.system.exitProcess
 

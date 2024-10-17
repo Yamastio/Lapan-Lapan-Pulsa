@@ -1,4 +1,4 @@
-package com.example.lapanlapanpulsa.ui.theme
+package com.promedia.lapanlapanpulsa.ui.theme
 
 import android.app.Activity
 import android.os.Build

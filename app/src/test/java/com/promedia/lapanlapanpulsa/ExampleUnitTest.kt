@@ -1,4 +1,4 @@
-package com.example.lapanlapanpulsa
+package com.promedia.lapanlapanpulsa
 
 import org.junit.Test
 

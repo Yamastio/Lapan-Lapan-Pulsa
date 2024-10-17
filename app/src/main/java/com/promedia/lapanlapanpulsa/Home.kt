@@ -1,4 +1,4 @@
-package com.example.lapanlapanpulsa
+package com.promedia.lapanlapanpulsa
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
@@ -22,7 +22,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
-import com.example.lapanlapanpulsa.ui.theme.LapanColor
+import com.promedia.lapanlapanpulsa.ui.theme.LapanColor
 
 
 @Composable

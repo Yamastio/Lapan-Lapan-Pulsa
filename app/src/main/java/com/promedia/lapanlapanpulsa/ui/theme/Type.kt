@@ -1,4 +1,4 @@
-package com.example.lapanlapanpulsa.ui.theme
+package com.promedia.lapanlapanpulsa.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
