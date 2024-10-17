@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -43,19 +44,24 @@ fun Home() {
                     )
                     webViewClient = object : WebViewClient() {
 
-                        override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
-                            val requestUrl = request.url.toString() // Mengganti nama variabel 'url' menjadi 'requestUrl'
+                        override fun shouldOverrideUrlLoading(
+                            view: WebView,
+                            request: WebResourceRequest
+                        ): Boolean {
+                            val requestUrl =
+                                request.url.toString() // Mengganti nama variabel 'url' menjadi 'requestUrl'
 
                             // Handler untuk WhatsApp
                             if (requestUrl.startsWith("https://wa.me/") || requestUrl.startsWith("whatsapp://")) {
-                                val whatsappIntent = Intent(Intent.ACTION_VIEW, Uri.parse(requestUrl))
+                                val whatsappIntent =
+                                    Intent(Intent.ACTION_VIEW, Uri.parse(requestUrl))
                                 whatsappIntent.setPackage("com.whatsapp")
                                 return try {
                                     view.context.startActivity(whatsappIntent)
                                     true
                                 } catch (e: ActivityNotFoundException) {
                                     // WhatsApp tidak terpasang, arahkan ke Play Store
-                                    view.loadUrl("https://play.google.com/store/apps/details?id=com.whatsapp")
+                                    Toast.makeText(view.context, "Silakan Install WA terlebih dahulu", Toast.LENGTH_SHORT).show()
                                     true
                                 }
                             }
@@ -72,8 +78,12 @@ fun Home() {
                             }
 
                             // Handler untuk download aplikasi (contoh: Play Store atau URL APK)
-                            if (requestUrl.contains(".apk") || requestUrl.startsWith("https://play.google.com/")) {
-                                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(requestUrl))
+                            if (requestUrl.contains(".apk") || requestUrl.startsWith("https://play.google.com/") || requestUrl.startsWith(
+                                    "https://drive.google.com/"
+                                )
+                            ) {
+                                val browserIntent =
+                                    Intent(Intent.ACTION_VIEW, Uri.parse(requestUrl))
                                 return try {
                                     view.context.startActivity(browserIntent)
                                     true
@@ -84,13 +94,15 @@ fun Home() {
 
                             // Handler untuk Telegram
                             if (requestUrl.startsWith("tg:")) {
-                                val telegramIntent = Intent(Intent.ACTION_VIEW, Uri.parse(requestUrl))
+                                val telegramIntent =
+                                    Intent(Intent.ACTION_VIEW, Uri.parse(requestUrl))
                                 telegramIntent.setPackage("org.telegram.messenger")
                                 return try {
                                     view.context.startActivity(telegramIntent)
                                     true
                                 } catch (e: ActivityNotFoundException) {
-                                    view.loadUrl("https://telegram.org/")
+                                    Toast.makeText(view.context, "Silakan Install Telegram terlebih dahulu", Toast.LENGTH_SHORT).show()
+
                                     true
                                 }
                             }

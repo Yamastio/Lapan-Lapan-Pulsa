@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
@@ -18,12 +19,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ExitToApp
-import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.rounded.Menu
-import androidx.compose.material3.Divider
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
@@ -41,13 +39,14 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -56,6 +55,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.lapanlapanpulsa.ui.theme.LapanColor
 import com.example.lapanlapanpulsa.ui.theme.LapanLapanPulsaTheme
 import kotlinx.coroutines.launch
+import kotlin.system.exitProcess
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,7 +82,17 @@ fun LapanLapanDrawer() {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val context = LocalContext.current.applicationContext // buat context untuk toast
     val currentBackStackEntry by navigationController.currentBackStackEntryAsState()
+    val isAtHomeScreen = currentBackStackEntry?.destination?.route == Screens.Home.screen
 
+    val backPressedTime = remember { mutableStateOf(0L) }
+    BackHandler(isAtHomeScreen) {
+        if (System.currentTimeMillis() - backPressedTime.value < 2000) {
+            exitProcess(0)
+        } else {
+            Toast.makeText(context, "Tekan sekali lagi untuk keluar", Toast.LENGTH_SHORT).show()
+            backPressedTime.value = System.currentTimeMillis()
+        }
+    }
 
 
     ModalNavigationDrawer(
@@ -112,7 +122,7 @@ fun LapanLapanDrawer() {
 
                     }
                 }
-                Divider()
+                HorizontalDivider()
                 //akhir header
 
                 //awal NavDrawerItem
@@ -168,7 +178,7 @@ fun LapanLapanDrawer() {
                         corountineScope.launch {
                             drawerState.close()
                         }
-                        Toast.makeText(context, "Logout", Toast.LENGTH_SHORT).show()
+                        exitProcess(0)
                     })
             }
         }
