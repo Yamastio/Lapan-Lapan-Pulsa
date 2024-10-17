@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Lapan Lapan Pulsa</string>
+    <string name= "a1">PT. ALOMOGADA MANDIRI NUSANTARA"></string>
+    <string name= "a2">Lapan Lapan merupakan server sekaligus distributor resmi Pulsa Elektrik All Operator, Paket Data, Voucher Kuota Internet, Token Listrik PLN, Voucher Game Online, Layanan Topup E-Wallet, dan Pembayaran Tagihan PPOB Multi Payment dengan produk terlengkap serta harga dasar yang murah.</string>
+    <string name= "a3">Kami merupakan server berskala nasional (anti cluster) sehingga semua produk kami dapat digunakan di seluruh wilayah Indonesia.</string>
+    <string name= "a4">Jl. Marelan IX Lingkungan VII Simpang Gang Parlik, Kel. Tanah 600, Kec. Medan Marelan, Medan, Sumatera Utara</string>
+    <string name= "nama_aboutme">Aplikasi Lapan Lapan Pulsa</string>
+    <string name= "versi">Versi 5.0</string>
+    <string name= "tahun">2024</string>
 </resources>
