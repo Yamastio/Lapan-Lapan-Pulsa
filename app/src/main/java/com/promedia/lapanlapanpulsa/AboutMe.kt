@@ -36,6 +36,9 @@ fun AboutMe() {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
+
+        Spacer(modifier = Modifier.height(10.dp))
+
         // Gambar Logo
         Image(
             painter = painterResource(id = R.drawable.logo),
@@ -44,7 +47,7 @@ fun AboutMe() {
             contentScale = ContentScale.Fit
         )
 
-        Spacer(modifier = Modifier.height(60.dp))
+        Spacer(modifier = Modifier.height(40.dp))
 
         // Nama Perusahaan
         Text(
@@ -54,7 +57,7 @@ fun AboutMe() {
             fontWeight = FontWeight.Bold
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(17.dp))
 
         // Deskripsi
         Text(
@@ -63,7 +66,7 @@ fun AboutMe() {
             textAlign = TextAlign.Center
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(17.dp))
 
         Text(
             text = stringResource(R.string.a3),
@@ -71,7 +74,7 @@ fun AboutMe() {
             textAlign = TextAlign.Center
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(17.dp))
 
         // Alamat
         Text(
@@ -87,7 +90,7 @@ fun AboutMe() {
         )
 
 
-        Spacer(modifier = Modifier.height(90.dp))
+        Spacer(modifier = Modifier.height(80.dp))
 
         // Footer
         Text(
@@ -97,11 +100,6 @@ fun AboutMe() {
         )
         Text(
             text = stringResource(R.string.versi),
-            fontSize = 14.sp,
-            textAlign = TextAlign.Center
-        )
-        Text(
-            text = stringResource(R.string.tahun),
             fontSize = 14.sp,
             textAlign = TextAlign.Center
         )
