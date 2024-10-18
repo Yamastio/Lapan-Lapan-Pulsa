@@ -10,6 +10,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.CircularProgressIndicator
@@ -21,6 +22,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.viewinterop.AndroidView
 import com.promedia.lapanlapanpulsa.ui.theme.LapanColor
 
@@ -132,11 +134,17 @@ fun Home(onWebViewCreated: (WebView?) -> Unit) {
         )
 
         if (isLoading) {
-            CircularProgressIndicator(
-                modifier = Modifier.align(Alignment.Center),
-                color = LapanColor,
-                trackColor = MaterialTheme.colorScheme.surfaceVariant,
-            )
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.White) // Memberikan background putih penuh
+            ) {
+                CircularProgressIndicator(
+                    modifier = Modifier.align(Alignment.Center),
+                    color = LapanColor, // Warna indikator sesuai preferensi
+                    trackColor = MaterialTheme.colorScheme.surfaceVariant, // Warna background indikator
+                )
+            }
         }
     }
 
