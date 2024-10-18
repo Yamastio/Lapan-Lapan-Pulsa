@@ -133,8 +133,9 @@ fun LapanLapanDrawer() {
 
                 //awal NavDrawerItem
                 NavigationDrawerItem(
-                    label = { Text(text = "Halaman Utama", color = Color.Black) },
-                    selected = currentBackStackEntry?.destination?.route == Screens.Home.screen,
+                    modifier = Modifier.height(45.dp).padding(top = 10.dp),
+                    label = { Text(text = "Halaman Utama", color = Color.Black, fontWeight = FontWeight.Bold) },
+                    selected = false,
                     icon = {
                         Icon(
                             imageVector = Icons.Default.Home,
@@ -152,8 +153,9 @@ fun LapanLapanDrawer() {
                     }
                 )
                 NavigationDrawerItem(
-                    label = { Text(text = "Tentang Kami", color = Color.Black) },
-                    selected = currentBackStackEntry?.destination?.route == Screens.AboutMe.screen,
+                    modifier = Modifier.height(45.dp),
+                    label = { Text(text = "Tentang Kami", color = Color.Black, fontWeight = FontWeight.Bold) },
+                    selected = false,
                     icon = {
                         Icon(
                             imageVector = Icons.Outlined.Info,
@@ -171,7 +173,8 @@ fun LapanLapanDrawer() {
                     }
                 )
                 NavigationDrawerItem(
-                    label = { Text(text = "Keluar", color = Color.Black) },
+                    modifier = Modifier.height(45.dp),
+                    label = { Text(text = "Keluar", color = Color.Black, fontWeight = FontWeight.Bold) },
                     selected = false,
                     icon = {
                         Icon(
