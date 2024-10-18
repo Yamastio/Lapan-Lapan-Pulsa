@@ -26,7 +26,7 @@ import com.promedia.lapanlapanpulsa.ui.theme.LapanColor
 
 
 @Composable
-fun Home() {
+fun Home(onWebViewCreated: (WebView?) -> Unit) {
     val url = "https://lapanlapan.pusatserver.id/"
 
     var backEnabled by remember { mutableStateOf(false) }
@@ -123,6 +123,7 @@ fun Home() {
 
                     loadUrl(url)
                     webView = this
+                    onWebViewCreated(this)
                 }
             },
             update = {

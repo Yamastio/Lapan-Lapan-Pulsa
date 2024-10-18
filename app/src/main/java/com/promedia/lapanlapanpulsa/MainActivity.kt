@@ -2,6 +2,7 @@ package com.promedia.lapanlapanpulsa
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.webkit.WebView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
@@ -20,6 +21,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.rounded.Menu
 import androidx.compose.material3.DrawerValue
@@ -42,6 +44,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -78,11 +81,14 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun LapanLapanDrawer() {
     val navigationController = rememberNavController()
-    val corountineScope = rememberCoroutineScope()
+    val coroutineScope = rememberCoroutineScope()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    val context = LocalContext.current.applicationContext // buat context untuk toast
+    val context = LocalContext.current.applicationContext
     val currentBackStackEntry by navigationController.currentBackStackEntryAsState()
     val isAtHomeScreen = currentBackStackEntry?.destination?.route == Screens.Home.screen
+
+    // Remember WebView instance from Home screen
+    var webViewInstance by remember { mutableStateOf<WebView?>(null) }
 
     val backPressedTime = remember { mutableStateOf(0L) }
     BackHandler(isAtHomeScreen) {
@@ -137,7 +143,7 @@ fun LapanLapanDrawer() {
                         )
                     },
                     onClick = {
-                        corountineScope.launch {
+                        coroutineScope.launch {
                             drawerState.close()
                         }
                         navigationController.navigate(Screens.Home.screen) {
@@ -156,7 +162,7 @@ fun LapanLapanDrawer() {
                         )
                     },
                     onClick = {
-                        corountineScope.launch {
+                        coroutineScope.launch {
                             drawerState.close()
                         }
                         navigationController.navigate(Screens.AboutMe.screen) {
@@ -175,7 +181,7 @@ fun LapanLapanDrawer() {
                         )
                     },
                     onClick = {
-                        corountineScope.launch {
+                        coroutineScope.launch {
                             drawerState.close()
                         }
                         exitProcess(0)
@@ -185,36 +191,43 @@ fun LapanLapanDrawer() {
     ) {
         Scaffold(
             topBar = {
-                val corountineScope = rememberCoroutineScope()
                 TopAppBar(
-                    title = {
-                        Text(text = "Lapan Lapan Pulsa", fontWeight = FontWeight.Bold)
-                    },
+                    title = { Text(text = "Lapan Lapan Pulsa", fontWeight = FontWeight.Bold) },
                     colors = TopAppBarDefaults.topAppBarColors(
                         containerColor = LapanColor,
                         titleContentColor = Color.White,
                         navigationIconContentColor = Color.White
                     ),
                     navigationIcon = {
-                        IconButton(onClick = { corountineScope.launch { drawerState.open() } }) {
+                        IconButton(onClick = { coroutineScope.launch { drawerState.open() } }) {
                             Icon(Icons.Rounded.Menu, contentDescription = "MenuButton")
+                        }
+                    },
+                    actions = {
+                        // Show Refresh button only on Home screen
+                        if (isAtHomeScreen) {
+                            IconButton(onClick = {
+                                webViewInstance?.reload() // Call reload() on WebView
+                            }) {
+                                Icon(Icons.Default.Refresh, contentDescription = "Refresh", tint = Color.White)
+                            }
                         }
                     }
                 )
             }
         ) { paddingValues ->
-            // Pastikan paddingValues diterapkan pada NavHost
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(paddingValues) // Gunakan padding dari Scaffold
+                    .padding(paddingValues)
             ) {
-                // Konten utama Anda di sini
                 NavHost(
                     navController = navigationController,
                     startDestination = Screens.Home.screen
                 ) {
-                    composable(Screens.Home.screen) { Home() }
+                    composable(Screens.Home.screen) {
+                        Home(onWebViewCreated = { webView -> webViewInstance = webView })
+                    }
                     composable(Screens.AboutMe.screen) { AboutMe() }
                 }
             }
