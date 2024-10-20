@@ -229,7 +229,8 @@ fun LapanLapanDrawer() {
                     startDestination = Screens.Home.screen
                 ) {
                     composable(Screens.Home.screen) {
-                        Home(onWebViewCreated = { webView -> webViewInstance = webView })
+                        // Panggil WebViewWithErrorHandling pada layar Home
+                        WebViewWithErrorHandling()
                     }
                     composable(Screens.AboutMe.screen) { AboutMe() }
                 }
