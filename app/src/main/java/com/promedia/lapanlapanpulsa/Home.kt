@@ -127,6 +127,9 @@ fun Home(onWebViewCreated: (WebView?) -> Unit, onErrorOccurred: () -> Unit) {
     var isLoading by remember { mutableStateOf(true) }
     var webView: WebView? = null // Deklarasikan di sini agar bisa diakses dalam scope ini
 
+    val minLoadingTimeMillis = 500L // Minimum time to show the spinner (500ms)
+    var loadingStartTime by remember { mutableStateOf(0L) }
+
     Box(modifier = Modifier.fillMaxSize()) {
         AndroidView(
             modifier = Modifier.fillMaxSize(),
@@ -214,10 +217,20 @@ fun Home(onWebViewCreated: (WebView?) -> Unit, onErrorOccurred: () -> Unit) {
                         override fun onPageStarted(view: WebView, url: String?, favicon: Bitmap?) {
                             backEnabled = view.canGoBack()
                             isLoading = true
+                            loadingStartTime = System.currentTimeMillis()
                         }
 
                         override fun onPageFinished(view: WebView, url: String?) {
-                            isLoading = false
+                            val elapsedTime = System.currentTimeMillis() - loadingStartTime
+
+                            // Ensure the spinner is visible for at least `minLoadingTimeMillis` duration
+                            if (elapsedTime < minLoadingTimeMillis) {
+                                Handler(Looper.getMainLooper()).postDelayed({
+                                    isLoading = false // Hide loading after the minimum duration
+                                }, minLoadingTimeMillis - elapsedTime)
+                            } else {
+                                isLoading = false // Hide loading immediately if enough time has passed
+                            }
                         }
 
                         override fun onReceivedError(
