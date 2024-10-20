@@ -48,7 +48,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.promedia.lapanlapanpulsa.ui.theme.LapanColor
 
 @Composable
-fun WebViewWithErrorHandling() {
+fun WebViewWithErrorHandling(onWebViewCreated: (WebView?) -> Unit) {
     val context = LocalContext.current
     var webViewInstance by remember { mutableStateOf<WebView?>(null) }
     var isError by remember { mutableStateOf(false) } // Untuk cek apakah terjadi error
@@ -101,9 +101,11 @@ fun WebViewWithErrorHandling() {
         )
     } else {
         Home(
-            onWebViewCreated = { webViewInstance = it },
+            onWebViewCreated = {
+                webViewInstance = it
+                onWebViewCreated(it) // Pass the instance upwards
+            },
             onErrorOccurred = {
-                // Memeriksa koneksi sebelum menandakan error
                 if (!isConnected) {
                     isError = true
                 }
